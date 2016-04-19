@@ -1,0 +1,58 @@
+```Dockerfile
+
+#################################################################
+# Dockerfile
+#
+# Version:          1 
+# Software:         Fastxtools
+# Software Version: 0.0.14
+# Description:      FASTQ/A short-reads pre-processing tools
+# Website:          http://hannonlab.cshl.edu/fastx_toolkit/index.html
+# Tags:             Genomics
+# Provides:         fastxtools 0.0.14
+# Base Image:       biodckr/biodocker:latest
+# Build Cmd:        docker build --rm -t biodckr/fastxtools 
+# Pull Cmd:         docker pull biodockr/fastxtools
+# Run Cmd:          docker run --rm biodckr/fastxtools fastxtools
+
+
+# Set the base image 
+FROM biodckr/biodocker:latest
+
+################## BEGIN INSTALLATION ###########################
+
+ENV URL=https://github.com/agordon/libgtextutils/releases/download/0.7/libgtextutils-0.7.tar.gz
+ENV GZIP=libgtextutils-0.7.tar.gz
+
+ENV URL1=wget https://github.com/agordon/fastx_toolkit/releases/download/0.0.14/fastx_toolkit-0.0.14.tar.bz2
+ENV BZIP=fastx_toolkit-0.0.14.tar.bz2
+
+
+#Comenzar la instalación
+RUN apt-get update \
+    apt-get upgrade \ 
+    wget $URL \
+    tar xzf $GZIP \
+    cd libgtextutils-0.7 \
+    ./configure \
+    make \
+    make install \
+    cd .. \
+    rm -rf libgtextutils-0.7 \
+    wget $URL1 \
+    tar xjf $BZIP \
+    cd fastx_toolkit-0.0.14 \
+    ./configure \
+    make \
+    sudo make install \
+    cd .. \
+    rm -rf fastx_toolkit-0.0.14 \
+
+#Usuario
+USER biodocker
+
+WORKDIR /data/
+
+#Autor
+MAINTAINER Emilio Petrone <emiliopetronem@gmail.com
+```
