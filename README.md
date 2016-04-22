@@ -1,2 +1,2 @@
 # TareasBioinfInvRepro2016-II
-Dockerfile
+El Dockerfile tiene los comandos necesarios para instalar fastxtools
